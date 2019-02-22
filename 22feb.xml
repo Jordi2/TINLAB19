@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+
+int[0,10] shared;
+
+//broadcast chan druk;//broadcast may be useful as emergency button
+chan druk[int[0,1]];
+
+const int L = 2;
+
+typedef int[0,L-1] id_L;</declaration>
+	<template>
+		<name x="5" y="5">light</name>
+		<parameter>id_L l</parameter>
+		<declaration>// Place local declarations here.
+
+int[0,10] lum;</declaration>
+		<location id="id0" x="170" y="-238">
+			<name x="160" y="-272">On</name>
+		</location>
+		<location id="id1" x="0" y="-238">
+			<name x="-9" y="-272">Off</name>
+		</location>
+		<init ref="id1"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<nail x="136" y="-272"/>
+			<nail x="34" y="-272"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="51" y="-187">druk[l]?</label>
+			<label kind="assignment" x="52" y="-204">lum:=shared</label>
+			<nail x="34" y="-204"/>
+			<nail x="136" y="-204"/>
+		</transition>
+	</template>
+	<template>
+		<name>knop</name>
+		<declaration>clock x;</declaration>
+		<location id="id2" x="272" y="0">
+			<name x="255" y="8">lamp2</name>
+		</location>
+		<location id="id3" x="136" y="0">
+			<name x="119" y="8">lamp1</name>
+		</location>
+		<location id="id4" x="0" y="0">
+			<name x="-42" y="-8">Start</name>
+		</location>
+		<init ref="id4"/>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id4"/>
+			<nail x="272" y="-136"/>
+			<nail x="0" y="-136"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id2"/>
+			<label kind="select" x="154" y="-51">i:int[0,10]</label>
+			<label kind="synchronisation" x="178" y="0">druk[1]!</label>
+			<label kind="assignment" x="154" y="0">shared:=i</label>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id3"/>
+			<label kind="select" x="18" y="-51">i:int[0,10]</label>
+			<label kind="synchronisation" x="42" y="0">druk[0]!</label>
+			<label kind="assignment" x="18" y="0">shared:=i</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+//Process = Template();
+// List one or more processes to be composed into a system.
+system light, knop;
+    </system>
+	<queries>
+	</queries>
+</nta>

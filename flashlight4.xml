@@ -125,6 +125,7 @@ x=0</label>
 			<source ref="id6"/>
 			<target ref="id2"/>
 			<label kind="guard" x="76" y="-127">brightLv==3</label>
+			<label kind="assignment" x="102" y="-144">x=0</label>
 			<nail x="-323" y="-102"/>
 			<nail x="170" y="-102"/>
 		</transition>
@@ -132,6 +133,7 @@ x=0</label>
 			<source ref="id6"/>
 			<target ref="id3"/>
 			<label kind="guard" x="-51" y="-127">brightLv==2</label>
+			<label kind="assignment" x="-25" y="-144">x=0</label>
 			<nail x="-323" y="-102"/>
 			<nail x="34" y="-102"/>
 		</transition>
