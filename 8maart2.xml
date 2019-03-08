@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.</declaration>
+	<template>
+		<name x="5" y="5">machine</name>
+		<declaration>// Place local declarations here.
+
+clock x;</declaration>
+		<location id="id0" x="-102" y="0">
+			<name x="-102" y="-34">eind</name>
+		</location>
+		<location id="id1" x="-170" y="68">
+			<name x="-187" y="85">onder</name>
+			<label kind="invariant" x="-187" y="102">x&lt;=5</label>
+		</location>
+		<location id="id2" x="-170" y="-68">
+			<name x="-187" y="-102">boven</name>
+			<label kind="invariant" x="-187" y="-119">x&lt;=4</label>
+		</location>
+		<location id="id3" x="-238" y="0">
+			<name x="-289" y="-25">keuze</name>
+			<label kind="invariant" x="-255" y="17">x&lt;=2</label>
+		</location>
+		<location id="id4" x="-408" y="0">
+			<name x="-442" y="-25">idle</name>
+			<label kind="invariant" x="-442" y="-42">x&lt;=2</label>
+		</location>
+		<init ref="id4"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id4"/>
+			<nail x="-102" y="136"/>
+			<nail x="-408" y="136"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id0"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id1"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id2"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id3"/>
+			<label kind="assignment" x="-340" y="0">x:=0</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+//Process = Template();
+// List one or more processes to be composed into a system.
+system machine;
+    </system>
+	<queries>
+		<query>
+			<formula>machine.keuze --&gt; machine.eind
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>A[] not deadlock
+			</formula>
+			<comment>
+			</comment>
+		</query>
+	</queries>
+</nta>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+
+//elementen zijn integers tussen 0 en 10, custom data type
+typedef int[0,10] id_e;
+
+id_e popped;</declaration>
+	<template>
+		<name x="5" y="5">machine</name>
+		<declaration>// Place local declarations here.
+
+//stack grootte
+const int size = 5;
+
+//stack pointer to current element
+int[0,size] head=0;
+
+//de stack...
+id_e stack[size];
+
+void push(id_e e)
+{
+    stack[head++]=e;
+}
+
+id_e pop()
+{
+    id_e temp=stack[head-1];
+    stack[--head]=0;
+    return (stack[--head]);
+}
+
+bool isFull()
+{
+    return(head==size);
+
+}
+
+bool isEmpty()
+{
+    return (head==0);
+}</declaration>
+		<location id="id0" x="-476" y="0">
+		</location>
+		<location id="id1" x="-170" y="0">
+		</location>
+		<location id="id2" x="-340" y="0">
+		</location>
+		<init ref="id2"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id2"/>
+			<nail x="-442" y="68"/>
+			<nail x="-374" y="68"/>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-442" y="-110">!isEmpty()</label>
+			<label kind="assignment" x="-442" y="-93">popped=pop()</label>
+			<nail x="-374" y="-68"/>
+			<nail x="-442" y="-68"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<nail x="-204" y="-68"/>
+			<nail x="-306" y="-68"/>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="select" x="-272" y="68">e:id_e</label>
+			<label kind="guard" x="-272" y="102">!isFull()</label>
+			<label kind="assignment" x="-272" y="85">push(e)</label>
+			<nail x="-306" y="68"/>
+			<nail x="-204" y="68"/>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+//Process = Template();
+// List one or more processes to be composed into a system.
+system machine;
+    </system>
+	<queries>
+	</queries>
+</nta>
